@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "my_mat.h"
 
+#include <limits.h>
 
 int min(int a, int b)
 {
@@ -41,7 +42,14 @@ void kazarmatrix(int matrix[N][N], int kazar[N][N])
     {
         for (int j = 0; j < N; j++)
         {
-            kazar[i][j] = matrix[i][j];
+            if (matrix[i][j] == 0)
+            {
+                kazar[i][j] = INT_MAX;
+            }
+            else
+            {
+                kazar[i][j] = matrix[i][j];
+            }
         }
     }
 
@@ -51,7 +59,7 @@ void kazarmatrix(int matrix[N][N], int kazar[N][N])
         {
             for (int j = 0; j < N; j++)
             {
-                if (kazar[i][k] > 0 && kazar[k][j] > 0)
+                if (kazar[i][k] != INT_MAX && kazar[k][j] != INT_MAX)
                     kazar[i][j] = min(kazar[i][j], (kazar[i][k] + kazar[k][j]));
             }
         }
@@ -62,7 +70,7 @@ void b(int kazar[N][N])
 {
     int i, j;
     scanf("%d%d", &i, &j);
-    if (kazar[i][j] < 0 || i == j)
+    if (kazar[i][j] == INT_MAX || i == j)
         printf("False\n");
     else
         printf("True\n");
@@ -72,7 +80,7 @@ void c(int kazar[N][N])
 {
     int i, j;
     scanf("%d%d", &i, &j);
-    if (kazar[i][j] < 0 || i== j)
+    if (kazar[i][j] == INT_MAX || i == j)
         printf("-1\n");
     else
         printf("%d\n", kazar[i][j]);
